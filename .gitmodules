@@ -10,3 +10,6 @@
 [submodule "external/text"]
 	path = external/text
 	url = https://github.com/requirejs/text
+[submodule "external/backbone"]
+	path = external/backbone
+	url = https://github.com/jashkenas/backbone

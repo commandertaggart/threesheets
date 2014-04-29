@@ -1,0 +1,61 @@
+<div class="sheet">
+	<div class="section vitals">
+		<input data-bind="label, value: name" />
+		<input data-bind="label, value: player" />
+		<input data-bind="label, value: charclass" />
+	</div>
+	<div class="section skills">
+		<div data-bind="label, with: str">
+			<input data-bind="value: score" />
+			<span data-bind="text: base" />
+			<input data-bind="value: mods" />
+			<input data-bind="value: temp" />
+			<span data-bind="text: total" />
+		</div>
+		<div data-bind="label, with: dex">
+			<input data-bind="value: score" />
+			<span data-bind="text: base" />
+			<input data-bind="value: mods" />
+			<input data-bind="value: temp" />
+			<span data-bind="text: total" />
+		</div>
+		<div data-bind="label, with: con">
+			<input data-bind="value: score" />
+			<span data-bind="text: base" />
+			<input data-bind="value: mods" />
+			<input data-bind="value: temp" />
+			<span data-bind="text: total" />
+		</div>
+		<div data-bind="label, with: int">
+			<input data-bind="value: score" />
+			<span data-bind="text: base" />
+			<input data-bind="value: mods" />
+			<input data-bind="value: temp" />
+			<span data-bind="text: total" />
+		</div>
+		<div data-bind="label, with: wis">
+			<input data-bind="value: score" />
+			<span data-bind="text: base" />
+			<input data-bind="value: mods" />
+			<input data-bind="value: temp" />
+			<span data-bind="text: total" />
+		</div>
+		<div data-bind="label, with: cha">
+			<input data-bind="value: score" />
+			<span data-bind="text: base" />
+			<input data-bind="value: mods" />
+			<input data-bind="value: temp" />
+			<span data-bind="text: total" />
+		</div>
+		<ul class="" data-bind="label, foreach: skills" data-x-bind="list: skills">
+			<!-- x-ko foreach: skills -->
+			<li>
+				<input data-bind="value: name" />
+				<select data-bind="value: attr, options: ['str','dex','con','int','wis','cha']" />
+				<input data-bind="value: ranks" />
+				<span data-bind="text: total" />
+			</li>
+			<!-- /x-ko -->
+		</ul>
+	</div>
+</div>

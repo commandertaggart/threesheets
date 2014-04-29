@@ -58,13 +58,14 @@
 		},
 		paths: {
 			'text': '../external/text/text',
-			'JSXTransformer': '../external/react-0.10.0/build/JSXTransformer',
-			'react': '../external/react-0.10.0/build/react-with-addons',
-			'jsx': '../external/require-jsx/jsx',
+			//'JSXTransformer': '../external/react-0.10.0/build/JSXTransformer',
+			//'react': '../external/react-0.10.0/build/react-with-addons',
+			//'jsx': '../external/require-jsx/jsx',
+			'knockout': '../external/knockout/knockout-3.1.0',
 			'strings': '../strings'
 		},
 		shim: {
-			'JSXTransformer': { exports: 'JSXTransformer' }
+			//'JSXTransformer': { exports: 'JSXTransformer' }
 		}
 	};	
 })();

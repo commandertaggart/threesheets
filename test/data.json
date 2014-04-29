@@ -1,4 +1,18 @@
 {
 	"name": "The Name",
-	"class": "The Class"
+	"player": "The Player",
+	"charclass": "The Class",
+
+	"str": { "score": 16, "mods": 0, "temp": 0 },
+	"dex": { "score": 15, "mods": 0, "temp": 0 },
+	"con": { "score": 14, "mods": 0, "temp": 0 },
+	"int": { "score": 13, "mods": 0, "temp": 0 },
+	"wis": { "score": 12, "mods": 0, "temp": 0 },
+	"cha": { "score": 11, "mods": 0, "temp": 0 },
+
+	"skills": [
+		{ "name": "Skill 1", "attr": "str", "ranks": 4 },
+		{ "name": "Skill 2", "attr": "int", "ranks": 6 },
+		{ "name": "Skill 3", "attr": "wis", "ranks": 3 }
+	]
 }

@@ -1,5 +1,6 @@
 
 {
-	"name": "Name",
-	"class": "Class"
+	"name": "Character Name",
+	"player": "Player Name",
+	"charclass": "Class"
 }
