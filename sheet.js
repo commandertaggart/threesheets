@@ -21,7 +21,8 @@ requirejs(
 		//console.log(window.__appParams.layoutUrl);
 		data = JSON.parse(data);
 
-		document.body.innerHTML = view;
+		var container = document.getElementById("container") || document.body;
+		container.innerHTML = view;
 
 		var sheet = window.__sheet = new Sheet(data, modelMap);
 

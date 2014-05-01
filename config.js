@@ -58,14 +58,12 @@
 		},
 		paths: {
 			'text': '../external/text/text',
-			//'JSXTransformer': '../external/react-0.10.0/build/JSXTransformer',
-			//'react': '../external/react-0.10.0/build/react-with-addons',
-			//'jsx': '../external/require-jsx/jsx',
 			'knockout': '../external/knockout/knockout-3.1.0',
+			'facebook': '//connect.facebook.net/en_US/all',
 			'strings': '../strings'
 		},
 		shim: {
-			//'JSXTransformer': { exports: 'JSXTransformer' }
+			'facebook': { exports: 'FB' }
 		}
 	};	
 })();
