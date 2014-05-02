@@ -47,15 +47,19 @@
 			<input data-bind="value: temp" />
 			<span data-bind="text: total" />
 		</div>
-		<ul class="" data-bind="label, foreach: skills" data-x-bind="list: skills">
-			<!-- x-ko foreach: skills -->
+		<ul data-bind="label: 'skills'">
+			<span data-bind="label: 'skills.name'"></span>
+			<span data-bind="label: 'skills.attr'"></span>
+			<span data-bind="label: 'skills.ranks'"></span>
+			<span data-bind="label: 'skills.total'"></span>
+			<!-- ko foreach: skills -->
 			<li>
 				<input data-bind="value: name" />
 				<select data-bind="value: attr, options: ['str','dex','con','int','wis','cha']" />
 				<input data-bind="value: ranks" />
 				<span data-bind="text: total" />
 			</li>
-			<!-- /x-ko -->
+			<!-- /ko -->
 		</ul>
 	</div>
 </div>

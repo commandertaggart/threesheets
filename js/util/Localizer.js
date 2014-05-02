@@ -51,6 +51,9 @@ define(
 
 		function Localizer(id, tokens)
 		{
+			if (id.charAt() === '`')
+				{ return id.substr(1); }
+			
 			var bits = id.split('.');
 			var target = strings;
 
