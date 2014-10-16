@@ -1,6 +1,7 @@
 
 {
-	"name": "Character Name",
-	"player": "Player Name",
-	"charclass": "Class"
+	"notes": "Notes",
+	"comments": "Comments",
+	"master_notes": "Game Master Notes",
+	"owner_notes": "Private Notes"
 }

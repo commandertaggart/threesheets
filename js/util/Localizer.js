@@ -26,9 +26,9 @@ define(
 	[
 		'text!strings/' + lang + '.json'
 	],
-	function define_Localizer(strings)
+	function define_Localizer(global_strings)
 	{
-		strings = JSON.parse(strings);
+		var strings = { global: JSON.parse(global_strings) };
 		
 		function mark(s)
 		{ return "##" + s + "##"; }
@@ -53,40 +53,78 @@ define(
 		{
 			if (id.charAt() === '`')
 				{ return id.substr(1); }
-			
-			var bits = id.split('.');
-			var target = strings;
 
-			while (bits.length > 0)
+			function _loc(target, id)
 			{
-				var bit = bits.shift();
-				if (bit in target)
+				var bits = id.split('.');
+
+				while (bits.length > 0)
 				{
-					target = target[bit];
+					var bit = bits.shift();
+					if (bit in target)
+					{
+						target = target[bit];
+					}
+					else
+						{ return null; }
 				}
-				else
-					{ return mark(id); }
+
+				if (typeof(target) === 'object' && "_" in target)
+					{ target = target._; }
+
+				if (typeof(target) === 'string')
+				{
+					if (tokens)
+					{
+						for (var t in tokens)
+						{
+							var r = new RegExp("\\{" + t + "\\}", "g");
+							target = target.replace(r, tokens[t]);
+						}
+					}
+
+					if (pseudoLoc)
+						{ target = pseudo(target); }
+
+					return target;
+				}
 			}
 
-			if (typeof(target) === 'string')
+			var localized;
+			var setindex = id.indexOf(':');
+			if (setindex > -1)
 			{
-				if (tokens)
+				var set = id.substr(0,setindex);
+				id = id.substr(setindex+1);
+
+				if (set === "")
+					{ set  = "global"; }
+
+				set = strings[set];
+
+				if (set)
 				{
-					for (var t in tokens)
-					{
-						var r = new RegExp("\\{" + t + "\\}", "g");
-						target = target.replace(r, tokens[t]);
-					}
+					localized = _loc(set, id);
+					if (localized)
+						{ return localized; }
 				}
+			}
 
-				if (pseudoLoc)
-					{ target = pseudo(target); }
-
-				return target;
+			for (setindex in strings)
+			{
+				var localized = _loc(strings[setindex], id);
+				if (localized)
+					{ return localized; }
 			}
 
 			return mark(id);
 		}
+
+		Localizer.addStrings =
+		function addStrings(id, set)
+		{
+			strings[id] = set;
+		};
 
 		return Localizer;
 	}

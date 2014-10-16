@@ -45,14 +45,29 @@ define(['knockout'], function define_TST00_Model(ko)
 	}
 
 	return {
-		"str": Attribute,
-		"dex": Attribute,
-		"con": Attribute,
-		"int": Attribute,
-		"wis": Attribute,
-		"cha": Attribute,
+		modelMap: {
+			"str": Attribute,
+			"dex": Attribute,
+			"con": Attribute,
+			"int": Attribute,
+			"wis": Attribute,
+			"cha": Attribute,
 
-		"skills": Skill
+			"skills": Skill
+		},
+		defaults: {
+			"name": "",
+			"player": "",
+			"charclass": "",
+			"align": "LG",
+			"str": { score: 10, mods: 0, temp: 0 },
+			"dex": { score: 10, mods: 0, temp: 0 },
+			"con": { score: 10, mods: 0, temp: 0 },
+			"int": { score: 10, mods: 0, temp: 0 },
+			"wis": { score: 10, mods: 0, temp: 0 },
+			"cha": { score: 10, mods: 0, temp: 0 },
+			"skills": []
+		}
 	};
 
 });

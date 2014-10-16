@@ -53,17 +53,16 @@
 
 	main.__requireConfig = {
 		baseUrl: baseUrl,
-		jsx: {
-			extension: "jsx"
-		},
 		paths: {
 			'text': '../external/text/text',
 			'knockout': '../external/knockout/knockout-3.1.0',
+			'jquery': '../../jquery',
 			'facebook': '//connect.facebook.net/en_US/all',
 			'strings': '../strings'
 		},
 		shim: {
-			'facebook': { exports: 'FB' }
+			'facebook': { exports: 'FB' },
+			'jquery': { exports: '$' }
 		}
 	};	
 })();

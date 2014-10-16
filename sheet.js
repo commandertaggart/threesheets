@@ -8,28 +8,54 @@ if (window.__requireConfig)
 requirejs(
 	[
 		'knockout',
-		//'text!' + window.__appParams.dataUrl,
-		'text!../test/data.json',
-		'text!../data/system/TST00/view.html',
-		'../data/system/TST00/model',
-		'data/Sheet'
-		//'sheet/SheetLoader'
+		'jquery',
+		'data/SheetLoader',
+		'data/RemoteContentSource'
 	],
-	function begin(ko, data, view, modelMap, Sheet)
+	function begin(ko, $, SheetLoader, ContentSource)
 	{
-		//console.log(window.__appParams.dataUrl + ":", data);
-		//console.log(window.__appParams.layoutUrl);
-		data = JSON.parse(data);
+		var api_url = window.location.protocol + "//" + 
+			window.location.host + ":5000" + 
+			window.location.pathname.substr(0, window.location.pathname.lastIndexOf("/")+1) + 
+			"../../../server/api/v1/";
+		var content_url = window.location.protocol + "//" + 
+			window.location.host + ":5000" + 
+			window.location.pathname.substr(0, window.location.pathname.lastIndexOf("/")+1) + 
+			"../../../server/data/";
 
-		var container = document.getElementById("container") || document.body;
-		container.innerHTML = view;
+		var source = new ContentSource({
+			queryUrl: api_url,
+			contentUrl: content_url
+		});
 
-		var sheet = window.__sheet = new Sheet(data, modelMap);
-
-		ko.applyBindings(sheet);
-
-		//window.__appParams.dataModel = new Sheet(data);
-
-		//var loader = new SheetLoader(window.__appParams.layoutUrl, document.body);
+		try
+		{
+			new SheetLoader(window.__appParams.data, source, function (sheet) {});
+		}
+		catch (error)
+		{
+			document.write("ERROR:<br />" + (error.stack || error.message || error.toString()));
+		}
 	}
 );
+
+window.threesheets = window.threesheets || {};
+
+window.threesheets.toggleNotes = function toggleNotes()
+{
+	var notes = document.getElementById("notes");
+	if (notes.style.display === "none")
+		{ notes.style.display = "inline-block"; }
+	else
+		{ notes.style.display = "none"; }
+}
+
+window.threesheets.showNotesTab = function showNotesTab(tab)
+{
+	var tabs = ['comments', 'master', 'owner'];
+	for (var i = 0; i < tabs.length; ++i)
+	{
+		var t = document.getElementById("notes-" + tabs[i]);
+		t.style.display = ((tabs[i] === tab)?"inline-block":"none");
+	}
+}

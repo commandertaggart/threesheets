@@ -9,7 +9,10 @@ The application is displayed as its own web page (e.g. in an IFrame), and requir
 
 * `spec`: A url path at which the following files can be found
 	* `view.html`: A file containing a Knockout-enhanced HTML snippet (no `<HTML>` or `<BODY>` tags) that defines the page layout and data bindings for the sheet.
-	* `model.js`: An AMD module defining an object that maps data binding IDs to functions that construct and return data model objects.  See 'The Data Model' for more information.
+	* `style.css`: A css file that contains style information for `view.html`.
+	* `model.js`: An AMD module returning an object with two properties:
+		* `modelMap`: An associative array that maps data binding IDs to functions that construct and return data model objects.  See 'The Data Model' for more information.
+		* `defaults`: An associative array of all the elements referenced in the view and default values for them.
 	* `en.json`: A file containing English language strings that map binding IDs to strings.
 	* Language-specific JSON files: Other files that match `en.json` in structure, but with localized strings.  See 'Localization' for more information.
 * `data`: A url path to a JSON file that contains the persistent data to be displayed in the sheet.  This url should accept both GET and POST methods for reading and writing, unless...

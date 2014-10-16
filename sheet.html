@@ -2,8 +2,37 @@
 	<head>
 		<script type="text/javascript" src="config.js"></script>
 		<script type="text/javascript" src="external/requirejs/require.js" data-main="sheet.js"></script>
+		<link rel="stylesheet" type="text/css" href="style/main.css" />
 	</head>
 	<body>
+		<div id="header">
+			<img id="token" data-bind="attr: { src: $data._root.tokenURL() }" />
+			<input id="name" data-bind="value: name" />
+			<!-- ko if: _root.canComment() -->
+				<button id="notes_button" data-bind="loctext: ':notes'" onclick="threesheets.toggleNotes()"></button>
+			<!-- /ko -->
+		</div>
+		<div id="notes" style="display:none">
+			<ul id="notes_tabs">
+				<!-- ko if: _root.canComment() -->
+					<li id="notes_tab_comments"><button data-bind="loctext: ':comments'" onclick="threesheets.showNotesTab('comments')"></button></li>
+				<!-- /ko -->
+				<!-- ko if: _root.isMaster() -->
+					<li id="notes_tab_master"><button data-bind="loctext: ':master_notes'" onclick="threesheets.showNotesTab('master')"></button></li>
+				<!-- /ko -->
+				<!-- ko if: _root.isOwner() -->
+					<li id="notes_tab_owner"><button data-bind="loctext: ':owner_notes'" onclick="threesheets.showNotesTab('owner')"></button></li>
+				<!-- /ko -->
+			</ul>
+			<div id="notes-comments" data-bind="if: _root.canComment()">
+			</div>
+			<div id="notes-master" data-bind="if: _root.isMaster()">
+				<textarea data-bind="label, value: master_notes"></textarea>
+			</div>
+			<div id="notes-owner" data-bind="if: _root.isOwner()">
+				<textarea data-bind="label, value: owner_notes"></textarea>
+			</div>
+		</div>
 		<div id="container"></div>
 	</body>
 </html>
