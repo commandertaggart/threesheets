@@ -1,15 +1,3 @@
-[submodule "external/react"]
-	path = external/react
-	url = https://github.com/facebook/react
 [submodule "external/requirejs"]
 	path = external/requirejs
 	url = https://github.com/jrburke/requirejs
-[submodule "external/require-jsx"]
-	path = external/require-jsx
-	url = https://github.com/thomasboyt/require-jsx
-[submodule "external/text"]
-	path = external/text
-	url = https://github.com/requirejs/text
-[submodule "external/backbone"]
-	path = external/backbone
-	url = https://github.com/jashkenas/backbone
