@@ -1,3 +1,6 @@
 [submodule "external/requirejs"]
 	path = external/requirejs
 	url = https://github.com/jrburke/requirejs
+[submodule "external/text"]
+	path = external/text
+	url = https://github.com/requirejs/text.git
