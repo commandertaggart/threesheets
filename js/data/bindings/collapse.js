@@ -1,8 +1,9 @@
 
 define(
 	[
+		'util/Localizer'
 	],
-	function define_koBindings_collapse()
+	function define_koBindings_collapse(Loc)
 	{
 		return {
 			init: function initCollapse(element, valueAccessor, allBindings, _dep, bindingContext)

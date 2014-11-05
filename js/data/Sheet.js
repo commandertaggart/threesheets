@@ -29,12 +29,12 @@ define(
 				{ return v; }
 		}
 
-		function Sheet(storedData, Model, access, source)
+		function Sheet(storedData, Model, access, dataUrl)
 		{
 			this._storage = storedData;
 			this._modelSpec = Model();
 			this._access = access;
-			this._source = source;
+			this._dataUrl = dataUrl;
 
 			this.model = {
 				_parent: this,
@@ -239,7 +239,7 @@ define(
 		Sheet.prototype.tokenURL =
 		function tokenURL()
 		{
-			return this._source.contentUrl() + "tokens/" + this._storage.enumerate.token;
+			return this._dataUrl + "tokens/" + this._storage.enumerate.token;
 		}
 
 		Sheet.prototype.isMaster =

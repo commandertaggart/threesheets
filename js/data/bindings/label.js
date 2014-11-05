@@ -1,8 +1,10 @@
 
 define(
 	[
+		'knockout',
+		'util/Localizer'
 	],
-	function define_koBindings_label()
+	function define_koBindings_label(ko, Loc)
 	{
 		return {
 			init: function initLabel(element, valueAccessor, allBindings, _dep_, bindingContext)

@@ -8,36 +8,29 @@ if (window.__requireConfig)
 requirejs(
 	[
 		'knockout',
-		'jquery',
-		'data/SheetLoader',
-		'data/RemoteContentSource'
+		'data/ajax',
+		'util/Localizer',
+		'data/SheetLoader'
 	],
-	function begin(ko, $, SheetLoader, ContentSource)
+	function begin(ko, ajax, Loc, SheetLoader)
 	{
-		var api_url = window.location.protocol + "//" + 
-			window.location.host + ":5000" + 
-			window.location.pathname.substr(0, window.location.pathname.lastIndexOf("/")+1) + 
-			"../../../server/api/v1/";
-		var content_url = window.location.protocol + "//" + 
-			window.location.host + ":5000" + 
-			window.location.pathname.substr(0, window.location.pathname.lastIndexOf("/")+1) + 
-			"../../../server/data/";
-
-		var source = new ContentSource({
-			queryUrl: api_url,
-			contentUrl: content_url
+		ajax([{
+			url: window.__appParams.config,
+			dataType: 'json'
+		}], function configLoaded(parts)
+		{
+			if (parts && parts[0])
+			{
+				if (parts[0].status === "success")
+				{ new SheetLoader(parts[0].content); }
+				else
+				{ throw new Error("Could not load configuration: " + parts[0].error); }
+			}
 		});
-
-		try
-		{
-			new SheetLoader(window.__appParams.data, source, function (sheet) {});
-		}
-		catch (error)
-		{
-			document.write("ERROR:<br />" + (error.stack || error.message || error.toString()));
-		}
 	}
 );
+
+window.INFO = console.info.bind(console, "THREESHEETS: ");
 
 window.threesheets = window.threesheets || {};
 
@@ -59,3 +52,4 @@ window.threesheets.showNotesTab = function showNotesTab(tab)
 		t.style.display = ((tabs[i] === tab)?"inline-block":"none");
 	}
 }
+

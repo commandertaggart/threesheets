@@ -24,11 +24,10 @@ var system = window.__appParams.system;
 
 define(
 	[
-		'text!strings/' + lang + '.json'
 	],
-	function define_Localizer(global_strings)
+	function define_Localizer()
 	{
-		var strings = { global: JSON.parse(global_strings) };
+		var strings = {};
 		
 		function mark(s)
 		{ return "##" + s + "##"; }

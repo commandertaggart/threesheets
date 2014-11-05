@@ -2,49 +2,84 @@
 define(
 	[
 		'knockout',
+		'jquery',
 		'data/ajax',
 		'data/Sheet',
 		'util/Localizer'
 	],
-	function define_SheetLoader(ko, ajax, Sheet, Localizer)
+	function define_SheetLoader(ko, $, ajax, Sheet, Localizer)
 	{
-		function SheetLoader(charId, source, callback)
+		function SheetLoader(config, loadedCallback)
 		{
-			var container = document.getElementById("container") || document.body;
-			var head = document.getElementsByTagName("HEAD")[0];
-
-			source.loadCharacter(charId, function charLoaded(error, charData, access)
-			{
-				if (error)
-					{ throw error; }
-				else
+			this._config = config;
+			
+			config.views = Object.keys(config.views).map(function (k) { return { id: k, view: config.views[k] } });
+			config.strings = Object.keys(config.strings).map(function (k) { return { id: k, strings: config.strings[k] } });
+			
+			ajax([
 				{
-					source.loadSystem(charData.enumerate.system, function systemLoaded(error, model, view, strings)
-					{
-						if (error)
-							{ throw error; }
-						else
-						{
-							var style = document.createElement("LINK");
-							style.type = "text/css";
-							style.rel = "stylesheet";
-							style.href = source._config.contentUrl + "systems/" + 
-								charData.enumerate.system + "/style.css";
-							head.appendChild(style);
+					url: config.model,
+					dataType: 'script'
+				},
+				{
+					url: config.style,
+					dataType: 'stylesheet'
+				},
+				{
+					url: config.dataUrl + config.dataRoot,
+					dataType: 'json'
+				},
+				config.views.map(function (item) { return { url: item.view, dataType: 'html' } }),
+				config.strings.map(function (item) { return { url: item.strings, dataType: 'json' } })
+			], this.loaded.bind(this, loadedCallback));
 
-							Localizer.addStrings(charData.enumerate.system, strings);
-
-							container.innerHTML = view;
-
-							var sheet = window.__sheet = new Sheet(charData, model, access, source);
-
-							ko.applyBindings(sheet.model);
-
-							callback(sheet);
-						}
-					});
-				}
+		}
+		
+		SheetLoader.prototype.loaded = function loaded(callback, parts)
+		{
+			var Model = parts[0];
+			var data = parts[2];
+			var views = {};
+			var strings = {};
+			
+			if (Model == null)
+			{ throw new Error("Model did not load."); }
+			if (data == null || data.status !== "success")
+			{ throw new Error("Data did not load correctly."); }
+			
+			this._config.views.forEach(function (view, index)
+			{
+				if (parts[3][index])
+				{ views[view.id] = parts[3][index]; }
 			});
+			if (views.main == null)
+			{ throw new Error("No main view found"); }
+			
+			this._config.strings.forEach(function (set, index)
+			{
+				if (parts[4][index])
+				{ Localizer.addStrings(set.id, parts[4][index]); }
+				else
+				{ console.warn("Could not load string set: " + set.id); }
+			});
+			
+			var $doc = $(document.body);
+			
+			$doc.append(views.main);
+			
+			for (var v in views)
+			{
+				if (v !== "main")
+				{
+					$doc.find("[data-child-view='" + v + "']").html(views[v]);
+				}
+			}
+					
+			var sheet = window.__sheet = new Sheet(data.content, Model, data.access, this._config.contentUrl);
+			ko.applyBindings(sheet.model);
+
+			if (callback)
+			{ callback(sheet); }
 		}
 
 		return SheetLoader;

@@ -1,22 +1,12 @@
 
 define(
-	[],
-	function define_ContentSource()
+	['jquery'],
+	function define_ContentSource($)
 	{
-		function ContentSource(config)
+		function ContentSource(configUrl)
 		{
-			config = config || {};
-
-			this._config = config;
-
+			
 		}
-
-		ContentSource.FILTER_ALL		= 0xFFFF;
-
-		ContentSource.FILTER_OWN		= 0x0001;
-		ContentSource.FILTER_SHARED		= 0x0002;
-
-		ContentSource.FILTER_SAMPLE		= 0x8000;
 
 		ContentSource.prototype.listSystems =
 		function listSystems(canCreate, callback)

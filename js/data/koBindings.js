@@ -10,7 +10,7 @@ define(
 		'data/bindings/listItemTools',
 		'data/bindings/autoSize'
 	],
-	function define_KnockoutBindings(ko, Loc, label, loctext, listTools, listItemTools, autoSize)
+	function define_KnockoutBindings(ko, label, loctext, collapse, listTools, listItemTools, autoSize)
 	{
 		ko.bindingHandlers.label = label;
 		ko.bindingHandlers.loctext = loctext;
